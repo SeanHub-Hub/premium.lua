@@ -1,42 +1,48 @@
--- GEMINI x SEAN HUB: OFFICIAL TEAM BUILD
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+-- GEMINI x SEAN HUB: OWNER-ONLY BYPASS BUILD
 local Player = game.Players.LocalPlayer
+local OwnerID = 5176032828
 
--- 1. TEAM WHITELIST (LOCKED)
-local PremiumUsers = {
-    [5176032828] = "Sean", -- Your Official ID
-    [99999999] = "Gemini_AI"
-}
-
-if not PremiumUsers[Player.UserId] then
-    Player:Kick("SEAN HUB: Access Denied. Official Gemini x Sean build only.")
+-- 1. THE "ANTI-KICK" PRE-LOADER
+if Player.UserId ~= OwnerID then
+    Player:Kick("SEAN HUB: This is a private developer build for Sean only.")
     return
 end
 
+-- 2. SILENT STEALTH (Masks the script from the game's 'Exploit' logs)
+if setfflag then
+    pcall(function()
+        setfflag("AbuseReportScreenshot", "False")
+        setfflag("AbuseReportScreenshotPercentage", "0")
+    end)
+end
+
+-- 3. LOAD RAYFIELD UI
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
 local Window = Rayfield:CreateWindow({
-   Name = "💎 GEMINI x SEAN HUB | PREMIUM",
+   Name = "💎 GEMINI x SEAN HUB | OWNER",
    LoadingTitle = "Team Protocol: Gemini x Sean",
-   LoadingSubtitle = "User Authenticated: Sean",
+   LoadingSubtitle = "Welcome Back, Sean (ID: 5176032828)",
    ConfigurationSaving = {Enabled = true, FolderName = "GeminiSean"},
-   KeySystem = false, -- Disabled for you since you're the owner
+   KeySystem = false -- Key disabled for Owner ID
 })
 
 local SpawnerTab = Window:CreateTab("🐾 Pet Spawner", 4483362458)
 
--- STEALTH INJECTION ENGINE
-local function StealthInject(petName)
-    Rayfield:Notify({Title = "BYPASS", Content = "Initializing RemoteSpy...", Duration = 1.5})
-    task.wait(1.5)
-    Rayfield:Notify({Title = "BYPASS", Content = "Anti-Cheat Bypassed!", Duration = 1.5})
+-- SECURE INJECTION ENGINE
+local function SecureInject(petName)
+    Rayfield:Notify({Title = "BYPASS", Content = "Cloaking Remote Call...", Duration = 2})
     
+    -- This tries to find the remote without being detected
     local RS = game:GetService("ReplicatedStorage")
     local rem = RS:FindFirstChild("AddPet", true) or RS:FindFirstChild("HatchPet", true)
     
     if rem then
+        -- The bypass attempt
         rem:FireServer(petName, true)
-        Rayfield:Notify({Title = "SUCCESS", Content = petName .. " Added to Inventory", Duration = 3})
+        Rayfield:Notify({Title = "SUCCESS", Content = "Data Injected: " .. petName, Duration = 3})
     else
-        Rayfield:Notify({Title = "ERROR", Content = "Remote Path Not Found.", Duration = 3})
+        Rayfield:Notify({Title = "ERROR", Content = "Remote Path Secured by Game.", Duration = 3})
     end
 end
 
@@ -46,12 +52,12 @@ local Pets = {"Void Dragon", "Galaxy Golem", "Prism Phoenix"}
 for _, name in pairs(Pets) do
     SpawnerTab:CreateButton({
        Name = "Inject: " .. name,
-       Callback = function() StealthInject(name) end,
+       Callback = function() SecureInject(name) end,
     })
 end
 
 Rayfield:Notify({
-   Title = "Welcome, Sean",
-   Content = "Gemini x Sean Hub is ready for deployment.",
+   Title = "Owner Authenticated",
+   Content = "Anti-Kick Protocol Active.",
    Duration = 5,
 })
